@@ -1,7 +1,7 @@
 let playerY, aiY, ballX, ballY, ballXSpeed, ballYSpeed, playerScore, aiScore;
 
 function setup() {
-  createCanvas(640, 480);
+  createCanvas(windowWidth, windowHeight);
   playerY = height / 2;
   aiY = height / 2;
   ballX = width / 2;
