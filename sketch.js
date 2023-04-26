@@ -6,8 +6,8 @@ function setup() {
   aiY = height / 2;
   ballX = width / 2;
   ballY = height / 2;
-  ballXSpeed = 5;
-  ballYSpeed = 5;
+  ballXSpeed = 7;
+  ballYSpeed = 7;
   playerScore = 0;
   aiScore = 0;
 }
