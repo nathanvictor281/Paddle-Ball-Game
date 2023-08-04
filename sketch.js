@@ -64,8 +64,11 @@ function draw() {
   text(playerScore + " - " + aiScore, width / 2, 40);
   
   // Move AI paddle
+// In draw(), change the AI's y-position update to a slower rate (e.g., only update every other frame):
+if (frameCount % 2 === 0) {
   aiY = ballY;
-  
+}
+
   // Check if there is a winner
   if (playerScore === 7) {
     textSize(64);
