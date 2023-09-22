@@ -65,7 +65,7 @@ function draw() {
   
   // Move AI paddle
 // In draw(), change the AI's y-position update to a slower rate (e.g., only update every other frame):
-if (frameCount % 2 === 0) {
+if (frameCount % 5 === 0) {
   aiY = ballY;
 }
 
