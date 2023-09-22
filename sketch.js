@@ -1,5 +1,6 @@
 let playerY, aiY, ballX, ballY, ballXSpeed, ballYSpeed, playerScore, aiScore;
 let difficultyLevel = "medium"; // Default difficulty level
+let gameStarted = false; // To track if the game has started
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -9,84 +10,39 @@ function setup() {
   ballY = height / 2;
   playerScore = 0;
   aiScore = 0;
-  setDifficulty(difficultyLevel); // Set initial difficulty
+  noLoop(); // Game doesn't start immediately
+  displayDifficultyOptions(); // Display difficulty options
 }
 
 function draw() {
-  background(0);
+  if (gameStarted) {
+    background(0);
 
-  // Draw middle line
-  stroke(255);
-  line(width / 2, 0, width / 2, height);
+    // Rest of the game code (paddles, ball, scoring, etc.) goes here
 
-  // Draw paddles
-  rect(20, playerY - 40, 10, 80);
-  rect(width - 30, aiY - 40, 10, 80);
+    // Move AI paddle based on difficulty
+    if (frameCount % aiReactionRate === 0) {
+      aiY = ballY;
+    }
 
-  // Update ball position
-  ballX += ballXSpeed;
-  ballY += ballYSpeed;
-
-  // Check ball collision with walls
-  if (ballY < 0 || ballY > height) {
-    ballYSpeed *= -1;
+    // Check if there is a winner
+    if (playerScore === 7) {
+      displayResult("You win!", color(0, 255, 0));
+      noLoop();
+    } else if (aiScore === 7) {
+      displayResult("You lose!", color(255, 0, 0));
+      noLoop();
+    }
   }
+}
 
-  // Check ball collision with paddles
-  if (ballX < 30 && ballY > playerY - 40 && ballY < playerY + 40) {
-    ballXSpeed *= -1.1;
-    ballYSpeed *= 1.1;
-  }
-
-  if (ballX > width - 30 && ballY > aiY - 40 && ballY < aiY + 40) {
-    ballXSpeed *= -1.1;
-    ballYSpeed *= 1.1;
-  }
-
-  // Check ball collision with score walls
-  if (ballX < 0) {
-    aiScore++;
-    resetBall();
-  }
-
-  if (ballX > width) {
-    playerScore++;
-    resetBall();
-  }
-
-  // Draw ball
-  ellipse(ballX, ballY, 20);
-
-  // Draw score
-  textAlign(CENTER);
-  textSize(32);
-  fill(255);
-  text(playerScore + " - " + aiScore, width / 2, 40);
-
-  // Move AI paddle based on difficulty
-  if (frameCount % aiReactionRate === 0) {
-    aiY = ballY;
-  }
-
-  // Check if there is a winner
-  if (playerScore === 7) {
-    textSize(64);
-    fill(0, 255, 0);
-    textAlign(CENTER);
-    text("You win!", width / 2, height / 2);
-    noLoop();
-  } else if (aiScore === 7) {
-    textSize(64);
-    fill(255, 0, 0);
-    textAlign(CENTER);
-    text("You lose!", width / 2, height / 2);
-    noLoop();
-  }
-
-  // Display difficulty options
-  textSize(16);
-  fill(255);
-  text("Difficulty Level: " + difficultyLevel, 100, height - 20);
+function resetGame() {
+  playerScore = 0;
+  aiScore = 0;
+  resetBall();
+  gameStarted = false;
+  noLoop(); // Stop the game
+  displayDifficultyOptions(); // Display difficulty options
 }
 
 function resetBall() {
@@ -101,17 +57,22 @@ function mouseMoved() {
 }
 
 function keyPressed() {
-  // Change difficulty level with keys (E for easy, M for medium, H for hard)
-  if (key === 'E' || key === 'e') {
-    difficultyLevel = "easy";
-    setDifficulty(difficultyLevel);
-  } else if (key === 'M' || key === 'm') {
-    difficultyLevel = "medium";
-    setDifficulty(difficultyLevel);
-  } else if (key === 'H' || key === 'h') {
-    difficultyLevel = "hard";
-    setDifficulty(difficultyLevel);
+  if (!gameStarted) {
+    // Change difficulty level with keys (E for easy, M for medium, H for hard)
+    if (key === 'E' || key === 'e') {
+      difficultyLevel = "easy";
+      setDifficulty(difficultyLevel);
+    } else if (key === 'M' || key === 'm') {
+      difficultyLevel = "medium";
+      setDifficulty(difficultyLevel);
+    } else if (key === 'H' || key === 'h') {
+      difficultyLevel = "hard";
+      setDifficulty(difficultyLevel);
+    }
   }
+  // Start the game with any key press
+  gameStarted = true;
+  loop(); // Start the game loop
 }
 
 function setDifficulty(level) {
@@ -132,4 +93,26 @@ function setDifficulty(level) {
       ballYSpeed = 6;
       break;
   }
+}
+
+function displayDifficultyOptions() {
+  background(0);
+  textAlign(CENTER);
+  textSize(24);
+  fill(255);
+  text("Choose Difficulty Level:", width / 2, height / 2 - 50);
+  text("Press 'E' for Easy, 'M' for Medium, or 'H' for Hard", width / 2, height / 2 + 50);
+  textSize(16);
+  text("Current Difficulty: " + difficultyLevel, width / 2, height / 2 + 100);
+}
+
+function displayResult(resultText, textColor) {
+  background(0);
+  textSize(64);
+  fill(textColor);
+  textAlign(CENTER);
+  text(resultText, width / 2, height / 2);
+  textSize(24);
+  fill(255);
+  text("Press any key to restart", width / 2, height / 2 + 50);
 }
