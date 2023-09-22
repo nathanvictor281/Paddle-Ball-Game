@@ -1,5 +1,5 @@
 let playerY, aiY, ballX, ballY, ballXSpeed, ballYSpeed, playerScore, aiScore;
-let difficultyLevel = "medium"; // Change this to "easy" or "hard" for different difficulties
+let difficultyLevel = "medium"; // Default difficulty level
 
 function setup() {
   createCanvas(windowWidth, windowHeight);
@@ -9,7 +9,7 @@ function setup() {
   ballY = height / 2;
   playerScore = 0;
   aiScore = 0;
-  setDifficulty(difficultyLevel);
+  setDifficulty(difficultyLevel); // Set initial difficulty
 }
 
 function draw() {
@@ -82,6 +82,11 @@ function draw() {
     text("You lose!", width / 2, height / 2);
     noLoop();
   }
+
+  // Display difficulty options
+  textSize(16);
+  fill(255);
+  text("Difficulty Level: " + difficultyLevel, 100, height - 20);
 }
 
 function resetBall() {
@@ -93,6 +98,20 @@ function resetBall() {
 
 function mouseMoved() {
   playerY = mouseY;
+}
+
+function keyPressed() {
+  // Change difficulty level with keys (E for easy, M for medium, H for hard)
+  if (key === 'E' || key === 'e') {
+    difficultyLevel = "easy";
+    setDifficulty(difficultyLevel);
+  } else if (key === 'M' || key === 'm') {
+    difficultyLevel = "medium";
+    setDifficulty(difficultyLevel);
+  } else if (key === 'H' || key === 'h') {
+    difficultyLevel = "hard";
+    setDifficulty(difficultyLevel);
+  }
 }
 
 function setDifficulty(level) {
