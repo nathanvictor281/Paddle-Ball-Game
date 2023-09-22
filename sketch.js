@@ -62,17 +62,17 @@ function keyPressed() {
     if (key === 'E' || key === 'e') {
       difficultyLevel = "easy";
       setDifficulty(difficultyLevel);
+      startGame(); // Start the game
     } else if (key === 'M' || key === 'm') {
       difficultyLevel = "medium";
       setDifficulty(difficultyLevel);
+      startGame(); // Start the game
     } else if (key === 'H' || key === 'h') {
       difficultyLevel = "hard";
       setDifficulty(difficultyLevel);
+      startGame(); // Start the game
     }
   }
-  // Start the game with any key press
-  gameStarted = true;
-  loop(); // Start the game loop
 }
 
 function setDifficulty(level) {
@@ -104,6 +104,11 @@ function displayDifficultyOptions() {
   text("Press 'E' for Easy, 'M' for Medium, or 'H' for Hard", width / 2, height / 2 + 50);
   textSize(16);
   text("Current Difficulty: " + difficultyLevel, width / 2, height / 2 + 100);
+}
+
+function startGame() {
+  gameStarted = true;
+  loop(); // Start the game loop
 }
 
 function displayResult(resultText, textColor) {
