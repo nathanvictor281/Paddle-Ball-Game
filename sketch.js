@@ -67,8 +67,14 @@ function draw() {
   text(playerScore + " - " + aiScore, width / 2, 40);
 
   // Move AI paddle based on difficulty
-  if (frameCount % aiReactionRate === 0) {
-    aiY = ballY;
+  if (difficultyLevel === "easy") {
+    aiY = ballY; // Basic AI follows the ball
+  } else if (difficultyLevel === "medium") {
+    // Medium AI follows the ball with a slight delay
+    aiY += (ballY - aiY) * 0.05;
+  } else if (difficultyLevel === "hard") {
+    // Hard AI predicts the ball's position and moves to intercept
+    aiY += (predictBallPosition() - aiY) * 0.1;
   }
 
   // Check if there is a winner
@@ -155,4 +161,11 @@ function changeDifficulty(delta) {
   }
   difficultyLevel = difficultyOptions[difficultyIndex];
   setDifficulty(difficultyLevel);
+}
+
+function predictBallPosition() {
+  // This function predicts the ball's position when it crosses the AI's paddle
+  let targetX = width - 40; // AI paddle's x-coordinate
+  let targetY = ballY + (targetX - ballX) * (ballYSpeed / ballXSpeed);
+  return constrain(targetY, 0, height);
 }
