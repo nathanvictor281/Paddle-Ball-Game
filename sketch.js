@@ -73,6 +73,10 @@ function keyPressed() {
       startGame(); // Start the game
     }
   }
+  // Add this part to restart the game after it's finished
+  if (key === 'R' || key === 'r') {
+    resetGame();
+  }
 }
 
 function setDifficulty(level) {
@@ -119,5 +123,5 @@ function displayResult(resultText, textColor) {
   text(resultText, width / 2, height / 2);
   textSize(24);
   fill(255);
-  text("Press any key to restart", width / 2, height / 2 + 50);
+  text("Press 'R' to restart or any key to change difficulty", width / 2, height / 2 + 50);
 }
