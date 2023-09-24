@@ -67,10 +67,8 @@ function draw() {
   text(playerScore + " - " + aiScore, width / 2, 40);
 
   // Move AI paddle based on difficulty
-  if (ballY > aiY) {
-    aiY += 2 * difficultyLevel;
-  } else if (ballY < aiY) {
-    aiY -= 2 * difficultyLevel;
+  if (frameCount % aiReactionRate === 0) {
+    aiY = ballY;
   }
 
   // Check if there is a winner
@@ -92,9 +90,6 @@ function draw() {
   textSize(16);
   fill(255);
   text("Difficulty Level: " + difficultyLevel, 100, height - 20);
-
-  //Show how to change difficulty
-  text("To Change Difficulty Level press first letter of work on keyboard.", 100, height - 25)
 }
 
 function resetBall() {
@@ -123,17 +118,17 @@ function keyPressed() {
 function setDifficulty(level) {
   switch (level) {
     case "easy":
-      aiReactionRate = 5; // Slower reaction time
+      aiReactionRate = 10; // Slower reaction time
       ballXSpeed = 4; // Slower ball speed
       ballYSpeed = 4;
       break;
     case "medium":
-      aiReactionRate = 10; // Medium reaction time
+      aiReactionRate = 6; // Medium reaction time
       ballXSpeed = 5; // Medium ball speed
       ballYSpeed = 5;
       break;
     case "hard":
-      aiReactionRate = 15; // Faster reaction time
+      aiReactionRate = 3; // Faster reaction time
       ballXSpeed = 6; // Faster ball speed
       ballYSpeed = 6;
       break;
