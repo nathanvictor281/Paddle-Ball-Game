@@ -9,6 +9,8 @@ function setup() {
   aiY = height / 2;
   ballX = width / 2;
   ballY = height / 2;
+  ballSpeedX = 1;
+  ballSpeedY = 1;
   playerScore = 0;
   aiScore = 0;
   setDifficulty(difficultyLevel); // Set initial difficulty
