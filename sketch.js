@@ -119,18 +119,18 @@ function setDifficulty(level) {
   switch (level) {
     case "easy":
       aiReactionRate = 10; // Slower reaction time
-      ballXSpeed = 4; // Slower ball speed
-      ballYSpeed = 4;
+      ballXSpeed = 4 * Math.sign(ballXSpeed); // Slower ball speed
+      ballYSpeed = 4 * Math.sign(ballYSpeed);
       break;
     case "medium":
       aiReactionRate = 6; // Medium reaction time
-      ballXSpeed = 5; // Medium ball speed
-      ballYSpeed = 5;
+      ballXSpeed = 5 * Math.sign(ballXSpeed); // Medium ball speed
+      ballYSpeed = 5 * Math.sign(ballYSpeed);
       break;
     case "hard":
       aiReactionRate = 3; // Faster reaction time
-      ballXSpeed = 6; // Faster ball speed
-      ballYSpeed = 6;
+      ballXSpeed = 6 * Math.sign(ballXSpeed); // Faster ball speed
+      ballYSpeed = 6 * Math.sign(ballYSpeed);
       break;
   }
 }
